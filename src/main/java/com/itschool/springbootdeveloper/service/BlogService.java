@@ -17,7 +17,7 @@ public class BlogService {
 
     private final BlogRepository blogRepository;
 
-    public static ArticleResponse response(Article article) {
+    public ArticleResponse response(Article article) {
         return new ArticleResponse(article);
     }
 
@@ -56,13 +56,9 @@ public class BlogService {
     }
 
     public void delete(Long id) {
-        try{
-            Article article = blogRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("id로 해당 객체 못 찾음"));
+        Article article = blogRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("id로 해당 객체 못 찾음"));
 
-            blogRepository.deleteById(id);
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage() + " 삭제 실패");
-        }
+        blogRepository.deleteById(id);
     }
 }

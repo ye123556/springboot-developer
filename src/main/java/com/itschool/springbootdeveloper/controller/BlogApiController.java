@@ -47,9 +47,8 @@ public class BlogApiController {
 
     // delete http method? delete(단건 삭제)
     @DeleteMapping("{id}")
-    public ResponseEntity update(@PathVariable Long id) {
+    public ResponseEntity delete(@PathVariable Long id) {
         blogService.delete(id); // return 값 확인
         return ResponseEntity.status(HttpStatus.OK).build();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 }
