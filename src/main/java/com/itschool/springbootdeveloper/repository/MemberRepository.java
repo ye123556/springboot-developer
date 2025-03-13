@@ -29,10 +29,9 @@ public interface MemberRepository extends JpaRepository<Member, Long> { // <Enti
     // findByName 추상 메소드를 정의만 함
     List<Member> findByName(String name);
 
-
-    //내림차순 정렬 후 첫번째
+    // 내림차순 정렬 후 첫번째
     Optional<Member> getFirstByOrderByIdDesc();
 
-    //Select count(*)
+    // SELECT count(*)
     Optional<Long> countBy();
 }
