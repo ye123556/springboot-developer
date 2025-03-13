@@ -63,3 +63,5 @@ public class MemberApiController { // 프레젠테이션 계층
 
 
 }
+
+// Memberresponse reponse = memberService. // 보류
