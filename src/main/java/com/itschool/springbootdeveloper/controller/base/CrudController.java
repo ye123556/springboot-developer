@@ -3,6 +3,7 @@ package com.itschool.springbootdeveloper.controller.base;
 import com.itschool.springbootdeveloper.domain.base.BaseEntity;
 import com.itschool.springbootdeveloper.ifs.CrudInterface;
 import com.itschool.springbootdeveloper.service.base.CrudService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ public abstract class CrudController <Req, Res, Entity extends BaseEntity>  impl
     protected abstract CrudService<Req, Res, Entity> getBaseService();
 
     @PostMapping("")
+    @Operation(summary = "생성", description = "새로운 엔티티를 생성")
     public ResponseEntity<Res> create(@RequestBody Req request) {
         log.info("create: {}에서 객체 {} 생성 요청", this.getClass().getSimpleName(), request);
 
@@ -31,13 +33,15 @@ public abstract class CrudController <Req, Res, Entity extends BaseEntity>  impl
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Res> read(@PathVariable Long id) {
+    @Operation(summary = "조회", description = "ID로 엔티티 조회")
+    public ResponseEntity<Res> read(@PathVariable(name = "id") Long id) {
         log.info("read: {}에서 id={}로 조회 요청", this.getClass().getSimpleName(), id);
 
         return baseService.read(id);
     }
 
     @GetMapping("")
+    @Operation(summary = "전체 조회", description = "엔티티 전체 조회")
     public ResponseEntity<List<Res>> readAll() {
         log.info("readAll: {}에서 전체 조회 요청", this.getClass().getSimpleName());
 
@@ -46,7 +50,8 @@ public abstract class CrudController <Req, Res, Entity extends BaseEntity>  impl
 
     // update http method? put(전체 수정), patch(부분 수정), patch는 이 과정에서는 생략
     @PutMapping("{id}")
-    public ResponseEntity<Res> update(@PathVariable Long id,
+    @Operation(summary = "수정", description = "ID와 요청 Body로 엔티티 수정")
+    public ResponseEntity<Res> update(@PathVariable(name = "id") Long id,
                                       @RequestBody Req request) {
         log.info("update: {}에서 id={}인 객체 {}로 수정 요청", this.getClass().getSimpleName(), id, request);
 
@@ -55,7 +60,8 @@ public abstract class CrudController <Req, Res, Entity extends BaseEntity>  impl
 
     // delete http method? delete(단건 삭제)
     @DeleteMapping("{id}")
-    public ResponseEntity delete(@PathVariable Long id) {
+    @Operation(summary = "삭제", description = "ID로 엔티티 삭제")
+    public ResponseEntity delete(@PathVariable(name = "id") Long id) {
         log.info("delete: {}에서 id={}인 객체 삭제 요청", this.getClass().getSimpleName(), id);
 
         return baseService.delete(id);

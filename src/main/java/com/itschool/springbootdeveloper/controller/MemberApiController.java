@@ -5,6 +5,7 @@ import com.itschool.springbootdeveloper.domain.Member;
 import com.itschool.springbootdeveloper.network.request.MemberRequest;
 import com.itschool.springbootdeveloper.network.response.MemberResponse;
 import com.itschool.springbootdeveloper.service.MemberService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 // @RestController, @Controller 애너테이션 또한 @Component 포함하고 있음
 @RestController // TestController 클래스를 빈으로 등록, 스프링에서 사용할 객체, 싱글톤
 @RequestMapping("/api/member")
+@Tag(name = "회원", description =  "회원 관련 API")
 public class MemberApiController extends CrudController<MemberRequest, MemberResponse, Member> {
     @Autowired
     public MemberApiController(MemberService baseService) { // MemberService
