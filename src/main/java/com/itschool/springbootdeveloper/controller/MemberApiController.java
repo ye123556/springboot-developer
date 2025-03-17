@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 // @RestController, @Controller 애너테이션 또한 @Component 포함하고 있음
 @RestController // TestController 클래스를 빈으로 등록, 스프링에서 사용할 객체, 싱글톤
 @RequestMapping("/api/member")
-@Tag(name = "회원", description =  "회원 관련 API")
+@Tag(name = "회원", description = "회원 관련 API")
 public class MemberApiController extends CrudController<MemberRequest, MemberResponse, Member> {
     @Autowired
     public MemberApiController(MemberService baseService) { // MemberService

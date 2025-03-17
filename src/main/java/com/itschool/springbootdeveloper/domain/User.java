@@ -1,9 +1,9 @@
 package com.itschool.springbootdeveloper.domain;
 
+import com.itschool.springbootdeveloper.domain.base.BaseEntity;
+import com.itschool.springbootdeveloper.network.request.UserRequest;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,9 +13,11 @@ import java.util.List;
 
 @Table(name = "users")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 @Getter
 @Entity
-public class User implements UserDetails { // UserDetails를 상속 받아 인증 객체로 사용
+public class User extends BaseEntity<UserRequest> implements UserDetails { // UserDetails를 상속 받아 인증 객체로 사용
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,13 +30,12 @@ public class User implements UserDetails { // UserDetails를 상속 받아 인�
     @Column(name = "password")
     private String password;
 
-
-    @Override
+    @Override // 권한 반환
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
-    @Override //  사용자의 로그인 id를 반환(고유한 값)
+    @Override // 사용자의 로그인 id를 반환(고유한 값)
     public String getUsername() {
         return this.email;
     }
@@ -58,13 +59,18 @@ public class User implements UserDetails { // UserDetails를 상속 받아 인�
 
     @Override // 패스워드 만료 여부 반환
     public boolean isCredentialsNonExpired() {
-        // 패스워드 만료되었는지 확인하는 로직
+        // 패스워드가 만료되었는지 확인하는 로직
         return true; // true -> 만료되지 않았음
     }
 
     @Override // 계정 사용 가능 여부 반환
     public boolean isEnabled() {
         // 계정이 사용 가능한지 확인하는 로직
-        return true;
+        return true; // true -> 사용 가능
+    }
+
+    @Override
+    public void update(UserRequest requestEntity) {
+        this.password = requestEntity.getPassword();
     }
 }
